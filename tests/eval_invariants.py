@@ -33,18 +33,17 @@ def one_test(func, md, df, df2=None):
         print (color.RED + str(exc) + color.END + "\n") 
     return
 
-# ADD MD NO FUNC TEST BACK IN!!!
-# md_no_func = (
-#     gr.Model()
-#         >> gr.cp_vec_function( 
-#             fun=None,
-#             var=["x"],
-#             out=["y"],
-#         )
-#     )
+md_no_func = (
+    gr.Model()
+        # >> gr.cp_vec_function( 
+        #     fun=None,
+        #     var=["x"],
+        #     out=["y"],
+        # )
+    )
 
 def perform_tests(func, 
-    wrong_type=[None, (1,2), 2, "a", [1, 8]], 
+    wrong_type=[None, (1,2), 2, "a", [1, 8], md_no_func], 
     df2_exists=False,
     md_corr=None, df_corr=None, df2_corr=None):
     r"""Performs test on a given function for the wrong_types
