@@ -106,73 +106,13 @@ def perform_tests(func,
             ## Test
             one_test(func, md, df, df2)
 
-print(perform_tests(gr.eval_df))
-# print(gr.eval_df(md, df)) # TESTED
-# print(gr.eval_nominal(md, df))
-# print(gr.eval_pnd(md, ))
-# print(gr.eval_grad_fd(md, df_base=df))
-# print(gr.eval_conservative(md, df_det=df))
-# print(gr.eval_sample(md, n=30, df_det=df))
 
-# def df_inv_test():
-
-
-
-# def eval_inv_test(tests=["model", "dataframe", "corr"])
-# for test in ["model", "dataframe", "corr"]:
-
-#     # Announce type of test:
-#     if test == "model":
-#         print(color.BOLD + "\nTesting for Wrong Model Type\n" + color.END)
-#     elif test == "dataframe":
-#         print(color.BOLD + "\nTesting for Wrong DataFrame Type\n" + color.END)
-    
-#     # Perform tests:
-#     for i in range(len(wrong_type)): # for each wrong type
-#         wrong = wrong_type[i]
-#         if test == "model":
-#             md = wrong
-#             print(color.UNDERLINE + "md value: " + str(wrong) + color.END)
-#             df = df_corr
-#         elif test == "dataframe":
-#             md = md_corr
-#             df = wrong
-#             print(color.UNDERLINE + "df value: " + str(wrong) + color.END)
-#         elif test =="corr":
-#             md = md_corr
-#             df = df_corr
-#             print(color.UNDERLINE + "Correct Test" + color.END)
-#         try:
-#             # print(gr.eval_df(md, df)) # TESTED
-#             # print(gr.eval_nominal(md, df))
-#             print(gr.eval_pnd(md, ))
-#             # print(gr.eval_grad_fd(md, df_base=df))
-#             # print(gr.eval_conservative(md, df_det=df))
-#             # print(gr.eval_sample(md, n=30, df_det=df))
-#         except Exception as exc:
-#             print ("\n" + traceback.format_exc())
-#             print (color.RED + str(exc) + color.END + "\n")
-
-# ):
-
-# def eval_inv_test_pnd(
-
-# ):
-# # general case:
-
-
-
-# # eval_pnd:
-# df_train = (
-#     df_data
-#     >> gr.tf_sample(n=10)
-# )
-# ## select test set
-# df_test = (
-#     df_data
-#         >> gr.tf_anti_join(
-#             df_train,
-#             by=["x1", "x2"],
-#         )
-#         >> gr.tf_sample(n=200)
-# )
+if __name__ == "__main__":
+    perform_tests(gr.eval_df)
+    # perform_tests(gr.eval_pnd, df2_ex ists=True, df_corr=df_train, df2_corr=df_test)
+    # print(gr.eval_df(md, df)) # TESTED
+    # print(gr.eval_nominal(md, df))
+    # print(gr.eval_pnd(md, ))
+    # print(gr.eval_grad_fd(md, df_base=df))
+    # print(gr.eval_conservative(md, df_det=df))
+    # print(gr.eval_sample(md, n=30, df_det=df))
