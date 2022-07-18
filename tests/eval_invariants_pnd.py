@@ -1,6 +1,7 @@
 import grama as gr
 from numpy import array, pi
 from eval_invariants import color
+import traceback    
 def make_pareto_random(twoDim = True):
     """ Create a model of random points for a pareto frontier evaluation
     Args:
@@ -85,14 +86,19 @@ md_no_func = (
 )
 wrong_type=[None, (1,2), 2, "a", [1, 8], md_no_func]
 for wrong in wrong_type:
-    df_pnd = (
-        wrong
-        >> gr.ev_pnd(
-            df_train,
-            df_test,
-            signs = {"y1":1, "y2":1},
-            seed = 101
-        )
+    df_test = wrong
+    try:
+        df_pnd = (
+            gr.eval_pnd(
+                md_fit,
+                df_train,
+                df_test,
+                signs = {"y1":1, "y2":1},
+                seed = 101
+            )
     )
-    print(color.UNDERLINE + "value: " + str(wrong) + color.END)
-    print(df_pnd)
+    except Exception as exc:
+        print ("\n" + traceback.format_exc())
+        print (color.RED + str(exc) + color.END + "\n") 
+    #         print(color.UNDERLINE + "value: " + str(wrong) + color.END)
+    # print(df_pnd)
