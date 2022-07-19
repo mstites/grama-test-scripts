@@ -14,7 +14,7 @@ class color:
    END = '\033[0m'
 
 def set_corr_vars(md_corr, df_corr, df2_exists, df2_corr):
-    """Set correct values to test, if none provided."""
+    """Set correct values to test for testing provided."""
     if md_corr is None:
         md_corr = (
         gr.Model()
@@ -32,28 +32,12 @@ def set_corr_vars(md_corr, df_corr, df2_exists, df2_corr):
 
     return md_corr, df_corr, df2_corr
 
-def one_test(func, md, df, df2=None):
-    r"""Performs one test of a function
-
-    func: grama function to test
-    md: Model variable
-    df: Df variable
-    df2: df variable if function takes df arguments
-    """
-    try:
-        if df2 is None:
-            print(func(md, df))
-        else:
-            print(func(md, df, df2))
-    except Exception as exc:
-        print ("\n" + traceback.format_exc())
-        print (color.RED + str(exc) + color.END + "\n") 
-    return
-
-def perform_tests(func, 
+def test_suite(func, 
     wrong_type=[None, (1,2), 2, "a", [1, 8], gr.Model()], 
     df2_exists=False,
-    md_corr=None, df_corr=None, df2_corr=None):
+    md_corr=None, df_corr=None, df2_corr=None,
+    mode="default",
+    **kwargs):
     r"""Performs test on a given function for the wrong_types
     for both the model and df arguments.
     
@@ -61,7 +45,9 @@ def perform_tests(func,
     wrong_type: list of wrong values to test
     df2_exists: bool to indicate whether func takes two dataframe arguments
 
-    md, df, df2: override default values. 'None' will use default."""
+    md, df, df2: override default values. 'None' will use default.
+    mode: Specific function test? e.g. "default" for anything with model
+        and df arguments in order and implicit."""
    
     md_corr, df_corr, df2_corr = set_corr_vars(md_corr, df_corr, df2_exists, df2_corr)
 
@@ -95,11 +81,31 @@ def perform_tests(func,
                 df2 = df2_corr
                 print(color.UNDERLINE + "Correct Test" + color.END)
             ## Test
-            one_test(func, md, df, df2)
+            test_func(func, md, df, df2, mode, kwargs = kwargs)
+
+def test_func(func, md, df, df2, mode, **kwargs):
+    r"""Performs one test of a function
+
+    func: grama function to test
+    md: Model variable
+    df: Df variable
+    df2: df variable if function takes df arguments
+    """
+    try:
+        if mode == "default":
+            if df2 is None:
+                # not a test with df2
+                print(func(md, df, kwargs))
+            else:
+                print(func(md, df, df2))
+    except Exception as exc:
+        print ("\n" + traceback.format_exc())
+        print (color.RED + str(exc) + color.END + "\n") 
+    return
 
 
 if __name__ == "__main__":
-    perform_tests(gr.eval_df)
+    test_suite(gr.eval_df, append=False)
     # perform_tests(gr.eval_pnd, df2_ex ists=True, df_corr=df_train, df2_corr=df_test)
     # print(gr.eval_df(md, df)) # TESTED
     # print(gr.eval_nominal(md, df))
