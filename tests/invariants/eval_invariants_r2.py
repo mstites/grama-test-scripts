@@ -1,3 +1,4 @@
+from re import A
 import grama as gr
 import traceback
 
@@ -98,19 +99,47 @@ def test_func(func, md, df, df2, mode, **kwargs):
                 print(func(md, df, kwargs))
             else:
                 print(func(md, df, df2))
+        elif mode == "keyword df_det":
+            print(func(md, df_det=df))
+        elif mode == "eval_grad_fd":
+            print(func(md, df_base=df))
+        elif mode == "eval_sample":
+            print(func(md, df_det=df, n=5))
+        elif mode == "eval_contour":
+            print(func(md, df=df))
+        # eval_opt
+        elif mode == "eval_nls":
+            print(func(md, df_data=df, df_init=df2))
+        elif mode == "eval_min":
+            print(func(md, df_start=df))
+        elif mode == "eval_pnd":
+            print(func(md, df, df2, signs = {"y1":1, "y2":1}, seed = 101))
+        elif mode == "eval_sinews":
+            print(func(md, df_det=df))
+        elif mode == "eval_tail":
+            print(func(md, df_corr=df, df_det=df2))
     except Exception as exc:
         print ("\n" + traceback.format_exc())
         print (color.RED + str(exc) + color.END + "\n") 
     return
 
-
 if __name__ == "__main__":
-    test_suite(gr.eval_df, append=False)
-    # perform_tests(gr.eval_pnd, df2_ex ists=True, df_corr=df_train, df2_corr=df_test)
-    # print(gr.eval_df(md, df)) # TESTED
-    # print(gr.eval_nominal(md, df))
-    # print(gr.eval_pnd(md, ))
-    # print(gr.eval_grad_fd)
-    # print(gr.eval_conservative(md, df_det=df))
-    # print(gr.eval_sample(md, n=30, df_det=df))
-
+    ## eval_defaults.py:
+    # test_suite(gr.eval_df)
+    # test_suite(gr.eval_nominal)
+    # test_suite(gr.eval_grad_fd, mode="eval_grad_fd")
+    # test_suite(gr.eval_conservative, mode="keyword df_det")
+    # test_suite(gr.eval_sample, mode="eval_sample")
+    ## eval_contour.py
+    # test_suite(gr.eval_contour, mode="eval_contour")
+    ## eval_opt.py
+    # test_suite(gr.eval_nls, mode="eval_nls", df2_exists=True)
+    # test_suite(gr.eval_min, mode="eval_min")
+    ## eval_pnd.py
+    # test_suite(gr.eval_pnd, df2_exists=True, mode="eval_pnd")
+    ## eval_random.py
+    # test_suite(gr.eval_sinews, mode="eval_sinews")
+    # test_suite(gr.eval_hybrid, mode="keyword df_det")
+    ## eval_tail.py
+    # test_suite(gr.eval_form_pma, mode="eval_form_pma", df2_exists=True)
+    test_suite(gr.eval_form_ria, mode="eval_tail", df2_exists=True)A

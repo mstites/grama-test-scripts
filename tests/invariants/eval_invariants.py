@@ -25,7 +25,7 @@ def one_test(func, md, df, df2=None):
     """
     try:
         if df2 is None:
-            print(func(md, df))
+            print(func(md, df_det=df))
         else:
             print(func(md, df, df2))
     except Exception as exc:
@@ -108,11 +108,39 @@ def perform_tests(func,
 
 
 if __name__ == "__main__":
-    perform_tests(gr.eval_df)
+    # perform_tests(gr.eval_df)
     # perform_tests(gr.eval_pnd, df2_ex ists=True, df_corr=df_train, df2_corr=df_test)
     # print(gr.eval_df(md, df)) # TESTED
     # print(gr.eval_nominal(md, df))
     # print(gr.eval_pnd(md, ))
-    # print(gr.eval_grad_fd(md, df_base=df))
+    print(gr.eval_grad_fd)
     # print(gr.eval_conservative(md, df_det=df))
     # print(gr.eval_sample(md, n=30, df_det=df))
+
+
+    def one_test(func, md, df, df2=None):
+    r"""Performs one test of a function
+
+    func: grama function to test
+    md: Model variable
+    df: Df variable
+    df2: df variable if function takes df arguments
+    """
+    try:
+        if df2 is None:
+            print(func(md, df_det=df))
+        else:
+            print(func(md, df, df2))
+    except Exception as exc:
+        print ("\n" + traceback.format_exc())
+        print (color.RED + str(exc) + color.END + "\n") 
+    return
+
+md_no_func = (
+    gr.Model()
+        # >> gr.cp_vec_function( 
+        #     fun=None,
+        #     var=["x"],
+        #     out=["y"],
+        # )
+    )
